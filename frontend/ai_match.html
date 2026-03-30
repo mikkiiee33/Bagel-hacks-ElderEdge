@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Mentor Match — ElderEdge</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ai-orb {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 1.5rem;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 var(--accent-border); }
+      50% { box-shadow: 0 0 0 12px transparent; }
+    }
+    .thinking-dots span {
+      display: inline-block;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); margin: 0 3px;
+      animation: dot-bounce 1.4s ease-in-out infinite;
+    }
+    .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dot-bounce {
+      0%,80%,100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .match-card { animation: fadeUp 0.4s ease both; }
+    .match-card:nth-child(2) { animation-delay: 0.1s; }
+    .match-card:nth-child(3) { animation-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="index.html">Find Mentors</a>
+    <a href="ai_match.html" class="active">AI Match</a>
+    <a href="signup.html">Become a Mentor</a>
+    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:3rem;padding-bottom:4rem;max-width:720px;">
+  <div class="page-enter">
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <div class="ai-orb">✦</div>
+      <p class="section-label" style="text-align:center">Powered by Llama 3</p>
+      <h1 class="section-title" style="text-align:center">Find your perfect mentor</h1>
+      <p class="section-sub" style="text-align:center;max-width:440px;margin:10px auto 0">
+        Describe your problem or goal in plain language. Our AI will match you with the best mentor from our global network.
+      </p>
+    </div>
+
+    <!-- Input -->
+    <div class="card" style="padding:2rem;margin-bottom:2rem">
+      <div class="form-group mb-3">
+        <label style="font-size:0.9rem;color:var(--text)">What do you need help with?</label>
+        <textarea id="problem-input" placeholder="e.g. I'm preparing for UPSC civil services exam and need guidance on Indian administrative structure and interview preparation…" style="min-height:130px;margin-top:8px"></textarea>
+      </div>
+      <button class="btn btn-primary w-full" style="justify-content:center;padding:13px;" onclick="runMatch()" id="match-btn">
+        ✦ Find my mentor
+      </button>
+    </div>
+
+    <!-- Example prompts -->
+    <div style="margin-bottom:2rem">
+      <p class="text-xs text-muted mb-2">Try an example:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px" id="examples-row"></div>
+    </div>
+
+    <!-- Results -->
+    <div id="results-wrap" style="display:none">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.25rem">
+        <h2 style="font-family:'Playfair Display',serif">Best matches for you</h2>
+      </div>
+      <div id="results-grid" style="display:flex;flex-direction:column;gap:1rem"></div>
+    </div>
+
+    <!-- Thinking state -->
+    <div id="thinking" style="display:none;text-align:center;padding:3rem">
+      <div class="thinking-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="text-muted mt-2" style="font-size:0.9rem">Analyzing your problem and matching mentors…</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" style="display:none" class="empty-state">
+      <div class="icon">⚠</div>
+      <h3>Matching failed</h3>
+      <p>Make sure Flask is running and the /ai/match route is set up.</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="utils.js"></script>
+<script>
+  const examples = [
+    "I'm a nursing student struggling with pharmacology",
+    "I want to start a business but don't know where to begin",
+    "I need help preparing for a software engineering interview",
+    "I want to understand how to file taxes for my small shop",
+    "I'm applying to study medicine and need career advice"
+  ];
+  document.getElementById("examples-row").innerHTML = examples.map(ex =>
+    `<button class="filter-pill" onclick="setExample(this)">${ex}</button>`
+  ).join("");
+
+  function setExample(el) {
+    document.getElementById("problem-input").value = el.textContent;
+    document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+    el.classList.add("active");
+  }
+
+  async function runMatch() {
+    const problem = document.getElementById("problem-input").value.trim();
+    if (!problem) { showToast("Please describe what you need help with", "error"); return; }
+
+    document.getElementById("results-wrap").style.display = "none";
+    document.getElementById("error-state").style.display = "none";
+    document.getElementById("thinking").style.display = "block";
+    document.getElementById("match-btn").disabled = true;
+
+    try {
+      const data = await apiFetch("/ai/match", {
+        method: "POST",
+        body: JSON.stringify({ problem })
+      });
+
+      document.getElementById("thinking").style.display = "none";
+      document.getElementById("match-btn").disabled = false;
+
+      if (!data.matches || !data.matches.length) {
+        document.getElementById("error-state").style.display = "block"; return;
+      }
+
+      renderMatches(data.matches, problem);
+    } catch {
+      document.getElementById("thinking").style.display = "none";
+      document.getElementById("match-btn").disabled = false;
+      document.getElementById("error-state").style.display = "block";
+    }
+  }
+
+  function renderMatches(matches, problem) {
+    const grid = document.getElementById("results-grid");
+    grid.innerHTML = matches.map((m, i) => `
+      <div class="card match-card" style="padding:1.5rem">
+        <div style="display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem">
+          <div style="position:relative">
+            ${avatar(m)}
+            <div style="position:absolute;top:-4px;left:-4px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#0e0f0f;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center">#${i+1}</div>
+          </div>
+          <div style="flex:1">
+            <div style="font-family:'Playfair Display',serif;font-weight:600;font-size:1.05rem">${m.name}</div>
+            <div class="text-sm text-muted">${m.past_role}</div>
+            <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+              <span class="badge badge-accent">${m.domain}</span>
+              <span class="badge badge-gray">📍 ${m.country}</span>
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="color:var(--accent);font-weight:600;font-size:0.9rem">${formatPrice(m)}</div>
+            <div class="free-badge mt-1">1st free</div>
+          </div>
+        </div>
+
+        <!-- AI reason -->
+        <div style="background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:1rem">
+          <p style="font-size:0.82rem;color:var(--accent-light);line-height:1.6">
+            <span style="font-weight:600">Why this match: </span>${m.reason || "Strong domain alignment with your needs."}
+          </p>
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <a href="profile.html?id=${m.id}" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">View profile</a>
+          <a href="booking.html?id=${m.id}" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book session</a>
+        </div>
+      </div>
+    `).join("");
+
+    document.getElementById("results-wrap").style.display = "block";
+    document.getElementById("results-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+</script>
+</body>
+</html>

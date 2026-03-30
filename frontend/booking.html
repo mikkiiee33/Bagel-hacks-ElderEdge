@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Session — ElderEdge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="index.html">Find Mentors</a>
+    <a href="ai_match.html">AI Match</a>
+    <a href="signup.html">Become a Mentor</a>
+    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:2.5rem;padding-bottom:4rem;max-width:780px;">
+  <a href="javascript:history.back()" class="btn btn-ghost btn-sm mb-3" style="display:inline-flex;">← Back</a>
+
+  <div class="page-enter">
+    <p class="section-label">Book a Session</p>
+    <h1 class="section-title mb-3">Reserve your slot</h1>
+
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:2rem;align-items:start" id="booking-layout">
+
+      <!-- Form -->
+      <div class="card" style="padding:2rem">
+        <div style="display:flex;flex-direction:column;gap:1.25rem">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Your name *</label>
+              <input id="mentee-name" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Your email *</label>
+              <input id="mentee-email" type="email" placeholder="you@email.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>What do you need help with? *</label>
+            <textarea id="problem" placeholder="Describe your goal for this session. The more specific, the better your session will be." style="min-height:120px"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred date & time *</label>
+            <input id="session-date" type="datetime-local">
+          </div>
+
+          <div id="free-notice" style="display:none;background:var(--green-bg);border:1px solid rgba(76,175,125,0.25);border-radius:var(--radius-sm);padding:12px 14px;">
+            <p style="font-size:0.85rem;color:var(--green);font-weight:500">✓ This will be your free first session!</p>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px">No payment required. Just show up ready to learn.</p>
+          </div>
+
+          <button class="btn btn-primary w-full" style="justify-content:center;padding:14px;" onclick="submitBooking()">
+            Confirm booking
+          </button>
+
+          <p class="text-xs text-muted" style="text-align:center">
+            A Google Meet link will be sent to your email after confirmation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Mentor summary -->
+      <div style="position:sticky;top:80px" id="mentor-summary">
+        <div class="skeleton" style="height:200px;border-radius:14px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirm-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
+  <div class="card page-enter" style="padding:2.5rem;max-width:460px;width:90%;text-align:center">
+    <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
+    <h2 style="font-family:'Playfair Display',serif;margin-bottom:10px">Session booked!</h2>
+    <p class="text-muted mb-3" id="confirm-text">Your session has been confirmed.</p>
+    <div class="card" style="padding:1rem;margin-bottom:1.5rem;text-align:left">
+      <p class="text-xs text-muted mb-1">Google Meet link</p>
+      <a id="meet-link" href="#" target="_blank" style="color:var(--accent);font-size:0.9rem;word-break:break-all"></a>
+    </div>
+    <a href="index.html" class="btn btn-primary w-full" style="justify-content:center;">Back to mentors</a>
+  </div>
+</div>
+
+<script src="utils.js"></script>
+<script>
+  const id = getParam("id");
+  const isFree = getParam("free") === "1";
+  if (!id) window.location.href = "index.html";
+
+  if (isFree) document.getElementById("free-notice").style.display = "block";
+
+  // Set min datetime to now
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById("session-date").min = now.toISOString().slice(0, 16);
+
+  async function loadMentor() {
+    try {
+      const m = await apiFetch(`/mentors/${id}`);
+      document.title = `Book ${m.name} — ElderEdge`;
+      document.getElementById("mentor-summary").innerHTML = `
+        <div class="card" style="padding:1.5rem">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+            ${avatar(m)}
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-weight:600">${m.name}</div>
+              <div class="text-xs text-muted">${m.domain}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="flex justify-between text-sm">
+              <span class="text-muted">Session</span>
+              <span>30 minutes</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-muted">Price</span>
+              <span style="color:var(--accent);font-weight:600">${isFree ? '<span style="color:var(--green)">Free</span>' : formatPrice(m)}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-muted">Via</span>
+              <span>Google Meet</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-muted">Language</span>
+              <span>${(m.languages || "English").split(",")[0].trim()}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    } catch { }
+  }
+
+  async function submitBooking() {
+    const name = document.getElementById("mentee-name").value.trim();
+    const email = document.getElementById("mentee-email").value.trim();
+    const problem = document.getElementById("problem").value.trim();
+    const date = document.getElementById("session-date").value;
+
+    if (!name || !email || !problem || !date) {
+      showToast("Please fill in all fields", "error"); return;
+    }
+    if (!email.includes("@")) {
+      showToast("Please enter a valid email", "error"); return;
+    }
+
+    try {
+      const result = await apiFetch("/bookings", {
+        method: "POST",
+        body: JSON.stringify({
+          mentor_id: parseInt(id),
+          mentee_name: name,
+          mentee_email: email,
+          problem,
+          session_date: date,
+          is_free: isFree
+        })
+      });
+
+      const meetLink = result.meet_link || `https://meet.google.com/xxx-yyyy-zzz`;
+      document.getElementById("meet-link").href = meetLink;
+      document.getElementById("meet-link").textContent = meetLink;
+      document.getElementById("confirm-text").textContent =
+        `See you on ${new Date(date).toLocaleString()}. Check your email for the full details.`;
+
+      const modal = document.getElementById("confirm-modal");
+      modal.style.display = "flex";
+    } catch {
+      showToast("Booking failed. Please try again.", "error");
+    }
+  }
+
+  loadMentor();
+</script>
+</body>
+</html>

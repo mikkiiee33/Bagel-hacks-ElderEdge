@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ElderEdge — Find a Mentor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="index.html" id="nav-home" class="active">Find Mentors</a>
+    <a href="ai_match.html" id="nav-ai">AI Match</a>
+    <a href="signup.html" id="nav-signup">Become a Mentor</a>
+    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section style="padding: 4rem 0 2rem; border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="page-enter">
+      <p class="section-label">Global Micro-Mentoring</p>
+      <h1 class="section-title" style="max-width:560px;">
+        Learn from those who've<br>
+        <span style="color:var(--accent)">lived it.</span>
+      </h1>
+      <p class="section-sub" style="max-width:480px; margin-top:12px;">
+        Book a 30-minute session with a retired professional — engineer, doctor, IAS officer, entrepreneur — anywhere in the world. Priced in your local currency.
+      </p>
+
+      <div style="display:flex; align-items:center; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="search" placeholder="Search by name, domain, country…" oninput="filterMentors()">
+        </div>
+        <a href="ai_match.html" class="btn btn-outline">
+          ✦ Try AI Matching
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--accent)" id="stat-mentors">—</div>
+          <div class="text-sm text-muted">Expert mentors</div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--accent)">12+</div>
+          <div class="text-sm text-muted">Domains covered</div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--accent)">30+</div>
+          <div class="text-sm text-muted">Countries</div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--accent)">Free</div>
+          <div class="text-sm text-muted">First session</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters + Grid -->
+<section style="padding: 2rem 0 4rem;">
+  <div class="container">
+    <div class="filter-row mb-3" id="filters">
+      <button class="filter-pill active" onclick="setFilter('All', this)">All</button>
+      <button class="filter-pill" onclick="setFilter('Medicine', this)">Medicine</button>
+      <button class="filter-pill" onclick="setFilter('Engineering', this)">Engineering</button>
+      <button class="filter-pill" onclick="setFilter('IT / Software', this)">IT / Software</button>
+      <button class="filter-pill" onclick="setFilter('Finance / CA', this)">Finance</button>
+      <button class="filter-pill" onclick="setFilter('Government / IAS', this)">Government</button>
+      <button class="filter-pill" onclick="setFilter('Teaching / Academia', this)">Teaching</button>
+      <button class="filter-pill" onclick="setFilter('Entrepreneurship', this)">Entrepreneurship</button>
+      <button class="filter-pill" onclick="setFilter('Law', this)">Law</button>
+      <button class="filter-pill" onclick="setFilter('Defence', this)">Defence</button>
+    </div>
+
+    <div class="mentor-grid" id="mentor-grid">
+      <!-- Skeletons while loading -->
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <div class="icon">🔍</div>
+      <h3>No mentors found</h3>
+      <p>Try a different search or filter</p>
+    </div>
+  </div>
+</section>
+
+<script src="utils.js"></script>
+<script>
+  let allMentors = [];
+  let activeFilter = "All";
+
+  async function loadMentors() {
+    const grid = document.getElementById("mentor-grid");
+    grid.innerHTML = skeletonCards(6);
+    try {
+      allMentors = await apiFetch("/mentors");
+      document.getElementById("stat-mentors").textContent = allMentors.length + "+";
+      renderGrid(allMentors);
+    } catch {
+      grid.innerHTML = `<div class="empty-state"><div class="icon">⚠</div><h3>Could not load mentors</h3><p>Make sure Flask is running on port 5000</p></div>`;
+    }
+  }
+
+  function renderGrid(mentors) {
+    const grid = document.getElementById("mentor-grid");
+    const empty = document.getElementById("empty-state");
+    if (!mentors.length) {
+      grid.innerHTML = "";
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    grid.innerHTML = mentors.map(m => `
+      <a class="card card-hover mentor-card" href="profile.html?id=${m.id}">
+        <div class="mentor-card-top">
+          ${avatar(m)}
+          <div class="mentor-info">
+            <div class="mentor-name">${m.name}</div>
+            <div class="mentor-role">${m.past_role}</div>
+          </div>
+        </div>
+        <div class="mentor-domain">${m.domain}</div>
+        <p class="mentor-bio">${m.bio}</p>
+        <div class="mentor-footer">
+          <div class="mentor-price">${formatPrice(m)}</div>
+          <div class="mentor-meta">
+            <span class="free-badge">1st free</span>
+            <span class="text-xs">${m.country}</span>
+          </div>
+        </div>
+      </a>
+    `).join("");
+  }
+
+  function filterMentors() {
+    const q = document.getElementById("search").value.toLowerCase();
+    let results = allMentors;
+    if (activeFilter !== "All") results = results.filter(m => m.domain === activeFilter);
+    if (q) results = results.filter(m =>
+      m.name.toLowerCase().includes(q) ||
+      m.domain.toLowerCase().includes(q) ||
+      m.country.toLowerCase().includes(q) ||
+      m.bio.toLowerCase().includes(q)
+    );
+    renderGrid(results);
+  }
+
+  function setFilter(domain, el) {
+    activeFilter = domain;
+    document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+    el.classList.add("active");
+    filterMentors();
+  }
+
+  loadMentors();
+</script>
+</body>
+</html>

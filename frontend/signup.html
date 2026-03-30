@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Mentor — ElderEdge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="index.html">Find Mentors</a>
+    <a href="ai_match.html">AI Match</a>
+    <a href="signup.html" class="active">Become a Mentor</a>
+    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:2.5rem;padding-bottom:4rem;max-width:780px;">
+<div class="page-enter">
+
+  <!-- Header -->
+  <div style="margin-bottom:2.5rem">
+    <p class="section-label">For retired professionals</p>
+    <h1 class="section-title">Share your lifetime<br>of <span style="color:var(--accent)">expertise.</span></h1>
+    <p class="section-sub" style="max-width:480px;margin-top:12px">
+      Join ElderEdge as a mentor. Set your own price, schedule, and availability. Help students and small businesses worldwide — and earn supplemental income doing it.
+    </p>
+
+    <!-- Benefits -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem">
+      <div class="card" style="padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">💰</div>
+        <div style="font-weight:500;font-size:0.9rem">Earn per session</div>
+        <div class="text-xs text-muted mt-1">You set your own price</div>
+      </div>
+      <div class="card" style="padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">🌍</div>
+        <div style="font-weight:500;font-size:0.9rem">Global reach</div>
+        <div class="text-xs text-muted mt-1">Mentees from any country</div>
+      </div>
+      <div class="card" style="padding:1rem;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">🕐</div>
+        <div style="font-weight:500;font-size:0.9rem">Flexible hours</div>
+        <div class="text-xs text-muted mt-1">30-min sessions, your schedule</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="card" style="padding:2rem">
+    <h2 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem">Create your mentor profile</h2>
+
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full name *</label>
+          <input id="name" placeholder="Dr. Jane Smith">
+        </div>
+        <div class="form-group">
+          <label>Country *</label>
+          <select id="country">
+            <option value="">Select country…</option>
+            <option>USA</option><option>UK</option><option>India</option>
+            <option>Canada</option><option>Australia</option><option>Germany</option>
+            <option>France</option><option>Nigeria</option><option>South Africa</option>
+            <option>Brazil</option><option>Mexico</option><option>Singapore</option>
+            <option>Japan</option><option>UAE</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Currency *</label>
+          <select id="currency">
+            <option value="">Select currency…</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="INR">INR — Indian Rupee</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="NGN">NGN — Nigerian Naira</option>
+            <option value="BRL">BRL — Brazilian Real</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="SGD">SGD — Singapore Dollar</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Domain / Expertise *</label>
+          <select id="domain">
+            <option value="">Select domain…</option>
+            <option>Medicine</option>
+            <option>Engineering</option>
+            <option>IT / Software</option>
+            <option>Finance / CA</option>
+            <option>Government / IAS</option>
+            <option>Teaching / Academia</option>
+            <option>Entrepreneurship</option>
+            <option>Law</option>
+            <option>Defence</option>
+            <option>Agriculture</option>
+            <option>Architecture</option>
+            <option>Journalism / Media</option>
+            <option>Social Work</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Past role / Title *</label>
+        <input id="past_role" placeholder="e.g. Retired Chief Engineer, Tata Steel (35 years)">
+      </div>
+
+      <div class="form-group">
+        <label>Bio * <span class="text-xs text-muted">(tell mentees about your experience)</span></label>
+        <textarea id="bio" placeholder="Describe your career, expertise, and what kind of mentees you can best help. Be specific — mentees read this before booking." style="min-height:130px"></textarea>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Languages spoken *</label>
+          <input id="languages" placeholder="e.g. English, Hindi, Tamil">
+        </div>
+        <div class="form-group">
+          <label>Price per session (USD) *</label>
+          <input id="price_usd" type="number" min="1" placeholder="e.g. 25">
+          <span class="text-xs text-muted mt-1">First session is always free for mentees.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Profile photo URL <span class="text-xs text-muted">(optional — paste a direct image link)</span></label>
+        <input id="photo_url" placeholder="https://…">
+      </div>
+
+      <button class="btn btn-primary w-full" style="justify-content:center;padding:14px;margin-top:8px;" onclick="submitSignup()">
+        Create mentor profile
+      </button>
+
+      <p class="text-xs text-muted" style="text-align:center">
+        By signing up you agree to keep sessions professional and respectful.
+      </p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;">
+  <div class="card page-enter" style="padding:2.5rem;max-width:420px;width:90%;text-align:center">
+    <div style="font-size:3rem;margin-bottom:1rem">🌟</div>
+    <h2 style="font-family:'Playfair Display',serif;margin-bottom:10px">Welcome to ElderEdge!</h2>
+    <p class="text-muted mb-3">Your mentor profile is live. Students and businesses worldwide can now find and book you.</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a id="view-profile-btn" href="#" class="btn btn-primary w-full" style="justify-content:center;">View my profile</a>
+      <a href="index.html" class="btn btn-ghost w-full" style="justify-content:center;">Browse other mentors</a>
+    </div>
+  </div>
+</div>
+
+<script src="utils.js"></script>
+<script>
+  async function submitSignup() {
+    const fields = ["name","country","currency","domain","past_role","bio","languages","price_usd"];
+    const data = {};
+    for (const f of fields) {
+      const val = document.getElementById(f).value.trim();
+      if (!val) { showToast(`Please fill in: ${f.replace("_"," ")}`, "error"); return; }
+      data[f] = f === "price_usd" ? parseFloat(val) : val;
+    }
+    data.photo_url = document.getElementById("photo_url").value.trim() || null;
+
+    try {
+      const result = await apiFetch("/mentors", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+      const mentorId = result.id || result.mentor_id;
+      if (mentorId) {
+        document.getElementById("view-profile-btn").href = `profile.html?id=${mentorId}`;
+      }
+      const modal = document.getElementById("success-modal");
+      modal.style.display = "flex";
+    } catch {
+      showToast("Signup failed. Make sure Flask is running.", "error");
+    }
+  }
+</script>
+</body>
+</html>
