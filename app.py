@@ -25,6 +25,22 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 def serve_home():
     return send_from_directory("frontend", "index.html")
 
+@app.route("/ai-match")
+def serve_ai_match():
+    return send_from_directory("frontend", "ai_match.html")
+
+@app.route("/profile")
+def serve_profile():
+    return send_from_directory("frontend", "profile.html")
+
+@app.route("/booking")
+def serve_booking():
+    return send_from_directory("frontend", "booking.html")
+
+@app.route("/signup")
+def serve_signup():
+    return send_from_directory("frontend", "signup.html")
+
 @app.route("/style.css")
 def serve_css():
     return send_from_directory("frontend", "style.css")
