@@ -289,7 +289,7 @@ Return ONLY the JSON array. No explanation, no markdown, no extra text."""
 
 # HEALTH CHECK 
 
-@app.route("/", methods=["GET"])
+@app.route("/health", methods=["GET"])
 def health():
     return jsonify({
         "status": "ElderEdge API running",
