@@ -1,4 +1,3 @@
 .env
-ElderEdge.db
 __pycache__/
 *.pyc
