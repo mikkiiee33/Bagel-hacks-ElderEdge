@@ -5,7 +5,11 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 import json
+from database import init_db
 
+if not os.path.exists("ElderEdge.db"):
+    init_db()
+    
 load_dotenv()
 
 app = Flask(__name__)
