@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentor Profile — ElderEdge</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <a class="nav-brand" href="/">Elder<span>Edge</span></a>
   <div class="nav-links">
-    <a href="index.html">Find Mentors</a>
-    <a href="ai_match.html">AI Match</a>
-    <a href="signup.html">Become a Mentor</a>
-    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+    <a href="/">Find Mentors</a>
+    <a href="/ai-match">AI Match</a>
+    <a href="/signup">Become a Mentor</a>
+    <a href="/signup" class="nav-cta btn btn-sm">Join Free</a>
   </div>
 </nav>
 
 <div class="container" style="padding-top:2.5rem; padding-bottom:4rem;">
 
-  <a href="index.html" class="btn btn-ghost btn-sm mb-3" style="display:inline-flex;">
+  <a href="/" class="btn btn-ghost btn-sm mb-3" style="display:inline-flex;">
     ← Back to mentors
   </a>
 
@@ -47,7 +47,7 @@
   <div id="profile-content" style="display:none;"></div>
 </div>
 
-<script src="utils.js"></script>
+<script src="/utils.js"></script>
 <script>
   const id = getParam("id");
   if (!id) window.location.href = "index.html";
@@ -65,7 +65,7 @@
           <div class="icon">⚠</div>
           <h3>Mentor not found</h3>
           <p>This mentor may no longer be available.</p>
-          <a href="index.html" class="btn btn-primary mt-3">Back to search</a>
+          <a href="/" class="btn btn-primary mt-3">Back to search</a>
         </div>`;
     }
   }
@@ -201,7 +201,7 @@
             </div>
           </div>
 
-          <a href="booking.html?id=${m.id}" class="btn btn-primary w-full" style="justify-content:center;">
+          <a href="/booking?id=${m.id}" class="btn btn-primary w-full" style="justify-content:center;">
             Book a session
           </a>
           <button class="btn btn-ghost w-full mt-2" style="justify-content:center;" onclick="bookFree()">

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Mentor Match — ElderEdge</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
   <style>
     .ai-orb {
       width: 80px; height: 80px; border-radius: 50%;
@@ -38,12 +38,12 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <a class="nav-brand" href="/">Elder<span>Edge</span></a>
   <div class="nav-links">
-    <a href="index.html">Find Mentors</a>
-    <a href="ai_match.html" class="active">AI Match</a>
-    <a href="signup.html">Become a Mentor</a>
-    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+    <a href="/">Find Mentors</a>
+    <a href="/ai_match" class="active">AI Match</a>
+    <a href="/signup">Become a Mentor</a>
+    <a href="/signup.html" class="nav-cta btn btn-sm">Join Free</a>
   </div>
 </nav>
 
@@ -103,7 +103,7 @@
   </div>
 </div>
 
-<script src="utils.js"></script>
+<script src="/utils.js"></script>
 <script>
   const examples = [
     "I'm a nursing student struggling with pharmacology",
@@ -183,8 +183,9 @@
         </div>
 
         <div style="display:flex;gap:8px">
-          <a href="profile.html?id=${m.id}" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">View profile</a>
-          <a href="booking.html?id=${m.id}" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book session</a>
+          <a  href="/profile?id=${m.id}" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">View profile</a>
+          <a href="/booking?id=
+${m.id}" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book session</a>
         </div>
       </div>
     `).join("");

@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ElderEdge — Find a Mentor</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">Elder<span>Edge</span></a>
+  <a class="nav-brand" href="/">Elder<span>Edge</span></a>
   <div class="nav-links">
-    <a href="index.html" id="nav-home" class="active">Find Mentors</a>
-    <a href="ai_match.html" id="nav-ai">AI Match</a>
-    <a href="signup.html" id="nav-signup">Become a Mentor</a>
-    <a href="signup.html" class="nav-cta btn btn-sm">Join Free</a>
+    <a href="/" id="nav-home" class="active">Find Mentors</a>
+    <a href="/ai-match" id="nav-ai">AI Match</a>
+    <a href="/signup" id="nav-signup">Become a Mentor</a>
+    <a href="/signup" class="nav-cta btn btn-sm">Join Free</a>
   </div>
 </nav>
 
@@ -36,7 +36,7 @@
           <span class="search-icon">⌕</span>
           <input type="text" id="search" placeholder="Search by name, domain, country…" oninput="filterMentors()">
         </div>
-        <a href="ai_match.html" class="btn btn-outline">
+        <a href="/ai-match" class="btn btn-outline">
           ✦ Try AI Matching
         </a>
       </div>
@@ -92,7 +92,7 @@
   </div>
 </section>
 
-<script src="utils.js"></script>
+<script src="/utils.js"></script>
 <script>
   let allMentors = [];
   let activeFilter = "All";
@@ -119,7 +119,7 @@
     }
     empty.style.display = "none";
     grid.innerHTML = mentors.map(m => `
-      <a class="card card-hover mentor-card" href="profile.html?id=${m.id}">
+      <a class="card card-hover mentor-card"  href="/profile?id=${m.id}">
         <div class="mentor-card-top">
           ${avatar(m)}
           <div class="mentor-info">
