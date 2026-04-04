@@ -1,4 +1,4 @@
-const API = "http://3.93.193.92:5000";
+const API = "";
 
 async function apiFetch(path, options = {}) {
   try {
