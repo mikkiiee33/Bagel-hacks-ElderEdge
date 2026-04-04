@@ -1,4 +1,4 @@
-const API = "http://3.93.193.92:5000";
+const API = "https://9kxgo1hbad.execute-api.us-east-1.amazonaws.com/prod";
 
 async function apiFetch(path, options = {}) {
   try {
