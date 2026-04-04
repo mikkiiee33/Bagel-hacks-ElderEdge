@@ -18,18 +18,26 @@ CORS(app)
 DB = "ElderEdge.db"
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-# ── Serve Frontend ─────────────────────────────────────────
+# Serve Frontend
 
 # @app.route("/app")
 @app.route("/")
 def serve_home():
     return send_from_directory("frontend", "index.html")
 
+@app.route("/style.css")
+def serve_css():
+    return send_from_directory("frontend", "style.css")
+
+@app.route("/utils.js")
+def serve_js():
+    return send_from_directory("frontend", "utils.js")
+
 @app.route("/app/<path:filename>")
 def serve_page(filename):
     return send_from_directory("frontend", filename)
 
-# ── DB helper ──────────────────────────────────────────────
+# DB helper 
 def get_db():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
@@ -41,7 +49,7 @@ def row_to_dict(row):
 def rows_to_list(rows):
     return [dict(r) for r in rows]
 
-# ── MENTORS ────────────────────────────────────────────────
+# MENTORS
 
 @app.route("/mentors", methods=["GET"])
 def get_mentors():
@@ -106,7 +114,7 @@ def create_mentor():
     return jsonify({"id": new_id, "message": "Mentor created successfully"}), 201
 
 
-# ── BOOKINGS ───────────────────────────────────────────────
+# BOOKINGS 
 
 @app.route("/bookings", methods=["POST"])
 def create_booking():
@@ -147,7 +155,7 @@ def get_bookings(mentor_id):
     return jsonify(rows_to_list(rows))
 
 
-# ── REVIEWS ────────────────────────────────────────────────
+# REVIEWS 
 
 @app.route("/reviews/<int:mentor_id>", methods=["GET"])
 def get_reviews(mentor_id):
@@ -181,7 +189,7 @@ def create_review():
     return jsonify({"message": "Review submitted"}), 201
 
 
-# ── AI MATCHING ────────────────────────────────────────────
+# AI MATCHING
 
 @app.route("/ai/match", methods=["POST"])
 def ai_match():
@@ -263,7 +271,7 @@ Return ONLY the JSON array. No explanation, no markdown, no extra text."""
         return jsonify({"error": str(e)}), 500
 
 
-# ── HEALTH CHECK ───────────────────────────────────────────
+# HEALTH CHECK 
 
 @app.route("/", methods=["GET"])
 def health():
