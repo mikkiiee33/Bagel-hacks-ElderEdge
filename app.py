@@ -49,9 +49,9 @@ def serve_css():
 def serve_js():
     return send_from_directory("frontend", "utils.js")
 
-@app.route("/app/<path:filename>")
-def serve_page(filename):
-    return send_from_directory("frontend", filename)
+# @app.route("/app/<path:filename>")
+# def serve_page(filename):
+#     return send_from_directory("frontend", filename)
 
 # DB helper 
 def get_db():
