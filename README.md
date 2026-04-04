@@ -1,14 +1,76 @@
 # ElderEdge — Unlock the World's Retired Expertise
 
-> A global micro-mentoring platform connecting retired professionals with students and small businesses worldwide.
+> *"The greatest waste in the world is the difference between what we are 
+> and what we could become."*
 
-**Quantum Sprint 2026 · For Social Good**
+## The Problem Nobody Is Solving
+
+Every day, thousands of brilliant professionals retire — surgeons who 
+performed 10,000 surgeries, engineers who built bridges and satellites, 
+IAS officers who ran entire districts, entrepreneurs who built companies 
+from nothing. They leave their careers carrying **decades of irreplaceable, 
+hard-won knowledge.**
+
+And that knowledge quietly disappears.
+
+At the same time, a student in Madurai can't afford career guidance. A 
+small business owner in Lagos doesn't know how to file taxes. A nursing 
+student in Brazil is failing pharmacology with no one to turn to. A 
+first-generation entrepreneur in rural India has a great idea but zero 
+mentorship.
+
+**Quality expertise has always been a privilege of geography and wealth.**
 
 ---
 
-## What is ElderEdge?
+## What ElderEdge Does
 
-ElderEdge lets anyone book a 30-minute session with a retired professional — engineer, doctor, IAS officer, entrepreneur, IT veteran, lawyer, and more. Sessions are priced in local currency, making expert mentorship affordable everywhere from the US to India to Nigeria. The first session is always free.
+ElderEdge is a **global micro-mentoring platform** that turns retirement 
+into impact — and turns inaccessible expertise into affordable opportunity.
+
+Retired professionals across **12+ domains** — medicine, engineering, IT, 
+law, finance, government, defence, entrepreneurship and more — offer 
+**30-minute sessions** to students and small businesses worldwide.
+
+A mentee describes their problem in plain language. Our **Llama 3 AI** 
+reads every mentor profile and returns the **top 3 best-fit matches** — 
+not keyword filters, but genuine semantic understanding of who can help 
+and why.
+
+Sessions are priced in **local currency**, making the same world-class 
+guidance affordable whether you're in New York or Nairobi, London or 
+Lucknow. **The first session is always free.**
+
+---
+
+## Why ElderEdge Is Different
+
+| Platform | What they do | What's missing |
+|---|---|---|
+| LinkedIn | Connects working professionals | Ignores retired experts entirely |
+| Internshala | Connects students to companies | Not mentor-focused |
+| Toptal / Clarity | Expert consulting | Expensive, not accessible |
+| **ElderEdge** | **Retired pros → students & SMEs** | **Nothing like this exists** |
+
+No platform today specifically activates **retired professionals** as 
+affordable micro-mentors across every domain, every country, every 
+currency. That gap is exactly where ElderEdge lives.
+
+---
+
+## Two Problems. One Platform.
+
+**For retired professionals:**
+- Turn lifetime expertise into supplemental income
+- Stay intellectually active and socially connected
+- Leave a legacy — pass knowledge before it's lost
+- Reach learners across the world from home
+
+**For students and small businesses:**
+- Access genuine expertise at a fraction of consulting rates
+- No geographic barriers — mentor anywhere, anytime
+- First session free — zero risk, zero commitment
+- Priced in your local currency — genuinely affordable
 
 ---
 
@@ -180,4 +242,4 @@ Built solo for **Quantum Sprint 2026** hackathon in under 24 hours.
 
 ## PPT link
 
-https://in.docworkspace.com/d/sbCaeoGvYbYcHrPR_2b09mj0pyzo9m74dav?sa=601.1074
+https://in.docworkspace.com/d/sbCaem0Q4RhaZAeE_lyjcl6n4d2bw5ezgha?sa=601.1037
