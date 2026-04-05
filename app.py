@@ -20,8 +20,8 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Serve Frontend
 
-<<<<<<< HEAD
-# @app.route("/app")
+<<<<<<< HEA
+
 =======
 >>>>>>> 1753d195b414b9985353c730e75ce70eb37e1398
 @app.route("/")
