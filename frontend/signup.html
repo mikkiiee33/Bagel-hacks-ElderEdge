@@ -184,7 +184,8 @@
       });
       const mentorId = result.id || result.mentor_id;
       if (mentorId) {
-        document.getElementById("view-profile-btn").href = `profile.html?id=${mentorId}`;
+        // document.getElementById("view-profile-btn").href = `profile.html?id=${mentorId}`;
+        document.getElementById("view-profile-btn").href = `/profile?id=${mentorId}`;
       }
       const modal = document.getElementById("success-modal");
       modal.style.display = "flex";
