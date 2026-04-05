@@ -20,7 +20,7 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Serve Frontend
 
-@app.route("/app")
+# @app.route("/app")
 @app.route("/")
 def serve_home():
     return send_from_directory("frontend", "index.html")
@@ -87,7 +87,7 @@ def get_mentors():
         like = f"%{search}%"
         params.extend([like, like, like, like])
 
-    query = query.replace("SELECT *", "SELECT *, price as price_usd")
+    # query = query.replace("SELECT *", "SELECT *, price as price_usd")
     query += " ORDER BY created_at DESC"
 
     conn = get_db()
