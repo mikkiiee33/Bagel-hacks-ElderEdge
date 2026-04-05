@@ -20,7 +20,10 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Serve Frontend
 
+<<<<<<< HEAD
 # @app.route("/app")
+=======
+>>>>>>> 1753d195b414b9985353c730e75ce70eb37e1398
 @app.route("/")
 def serve_home():
     return send_from_directory("frontend", "index.html")
